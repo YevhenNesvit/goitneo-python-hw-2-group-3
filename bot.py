@@ -9,6 +9,8 @@ def input_error(func):
             return func(*args, **kwargs)
         except ValueError:
             return "Give me name and phone please."
+        except KeyError:
+            return "Contact does not exist. Please try again!"
 
     return wrapper
 
@@ -32,16 +34,14 @@ def change_contact(args, contacts):
         contacts[name] = phone
         return "Contact updated."
 
+@input_error
 def show_phone(args, contacts) :
     if len(args) != 1 :
         return "Please enter only name!"
     else :
         name = args[0]
 
-    if name not in contacts.keys() :
-        return f"Contact {name} does not exist. Please try again!"
-    else :
-        return contacts[name]
+    return contacts[name]
     
 def show_all(contacts) :
     all = ""
@@ -51,7 +51,6 @@ def show_all(contacts) :
         for k, v in contacts.items() :
             all += f"{k} {v}\n"
     return all.rstrip()
-
 
 def main():
     contacts = {}
