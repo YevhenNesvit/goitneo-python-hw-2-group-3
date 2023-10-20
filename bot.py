@@ -3,11 +3,18 @@ def parse_input(user_input):
     cmd = cmd.strip().lower()
     return cmd, *args
 
+def input_error(func):
+    def wrapper(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except ValueError:
+            return "Give me name and phone please."
+
+    return wrapper
+
+@input_error
 def add_contact(args, contacts):
-    if len(args) != 2 :
-        return "Please enter name and phone number!"
-    else :
-        name, phone = args
+    name, phone = args
 
     if name in contacts.keys() :
         return f"Contact {name} already exist. Please try again!"
@@ -15,11 +22,9 @@ def add_contact(args, contacts):
         contacts[name] = phone
         return "Contact added."
     
+@input_error   
 def change_contact(args, contacts):
-    if len(args) != 2 :
-        return "Please enter name and phone number!"
-    else :
-        name, phone = args
+    name, phone = args
     
     if name not in contacts.keys() :
         return f"Contact {name} does not exist. Please try again!"
