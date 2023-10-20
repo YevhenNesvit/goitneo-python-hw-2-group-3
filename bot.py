@@ -6,12 +6,14 @@ def parse_input(user_input):
 def input_error(func):
     def wrapper(*args, **kwargs):
         try:
-            return func(*args, **kwargs)
+            if func.__name__ == 'show_phone' and len(args[0]) != 1:
+                return "Please enter only name!"
+            else:
+                return func(*args, **kwargs)
         except ValueError:
             return "Give me name and phone please."
         except KeyError:
             return "Contact does not exist. Please try again!"
-
     return wrapper
 
 @input_error
@@ -36,13 +38,11 @@ def change_contact(args, contacts):
 
 @input_error
 def show_phone(args, contacts) :
-    if len(args) != 1 :
-        return "Please enter only name!"
-    else :
-        name = args[0]
+    name = args[0]
 
     return contacts[name]
-    
+
+@input_error    
 def show_all(contacts) :
     all = ""
     if not contacts :
