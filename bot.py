@@ -9,9 +9,9 @@ def input_error(func):
             if func.__name__ == 'show_phone' and len(args[0]) != 1 :
                 return "Enter user name"
             elif func.__name__ == 'add_contact' and args[0][0] in args[1] :
-                return "Contact already exist. Please try again!"
+                return f"Contact {args[0][0]} already exist. To update contact enter 'change name phone'!"
             elif func.__name__ == 'change_contact' and args[0][0] not in args[1] :
-                return "Contact does not exist. Please try again!"
+                return f"Contact {args[0][0]} does not exist. Nothing to update!"
             elif not args[0] :
                 return "There are no contacts yet!"
             else:
