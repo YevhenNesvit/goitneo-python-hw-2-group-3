@@ -6,8 +6,10 @@ def parse_input(user_input):
 def input_error(func):
     def wrapper(*args, **kwargs):
         try:
-            if func.__name__ == 'show_phone' and len(args[0]) != 1:
-                return "Please enter only name!"
+            if func.__name__ == 'show_phone' and len(args[0]) != 1 :
+                return "Enter user name"
+            elif not kwargs :
+                return "There are no contacts yet!"
             else:
                 return func(*args, **kwargs)
         except ValueError:
@@ -45,11 +47,8 @@ def show_phone(args, contacts) :
 @input_error    
 def show_all(contacts) :
     all = ""
-    if not contacts :
-        return "There are no contacts yet!"
-    else :
-        for k, v in contacts.items() :
-            all += f"{k} {v}\n"
+    for k, v in contacts.items() :
+        all += f"{k} {v}\n"
     return all.rstrip()
 
 def main():
