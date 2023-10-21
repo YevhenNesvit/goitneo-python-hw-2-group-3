@@ -8,7 +8,11 @@ def input_error(func):
         try:
             if func.__name__ == 'show_phone' and len(args[0]) != 1 :
                 return "Enter user name"
-            elif not kwargs :
+            elif func.__name__ == 'add_contact' and args[0][0] in args[1] :
+                return "Contact already exist. Please try again!"
+            elif func.__name__ == 'change_contact' and args[0][0] not in args[1] :
+                return "Contact does not exist. Please try again!"
+            elif not args[0] :
                 return "There are no contacts yet!"
             else:
                 return func(*args, **kwargs)
@@ -21,22 +25,16 @@ def input_error(func):
 @input_error
 def add_contact(args, contacts):
     name, phone = args
-
-    if name in contacts.keys() :
-        return f"Contact {name} already exist. Please try again!"
-    else :
-        contacts[name] = phone
-        return "Contact added."
+    contacts[name] = phone
+    
+    return "Contact added."
     
 @input_error   
 def change_contact(args, contacts):
     name, phone = args
-    
-    if name not in contacts.keys() :
-        return f"Contact {name} does not exist. Please try again!"
-    else :
-        contacts[name] = phone
-        return "Contact updated."
+    contacts[name] = phone
+
+    return "Contact updated."
 
 @input_error
 def show_phone(args, contacts) :
