@@ -11,7 +11,7 @@ def input_error(func):
             elif func.__name__ == 'add_contact' and args[0][0] in args[1] :
                 return f"Contact {args[0][0]} already exist. To update contact enter 'change name phone'!"
             elif func.__name__ == 'change_contact' and args[0][0] not in args[1] :
-                return f"Contact {args[0][0]} does not exist. Nothing to update!"
+                return f"Contact {args[0][0]} does not exist. To add contact enter 'add name phone'!"
             elif not args[0] :
                 return "There are no contacts yet!"
             else:
@@ -20,6 +20,8 @@ def input_error(func):
             return "Give me name and phone please."
         except KeyError:
             return "Contact does not exist. Please try again!"
+        except IndexError:
+            return "Invalid command format."
     return wrapper
 
 @input_error
