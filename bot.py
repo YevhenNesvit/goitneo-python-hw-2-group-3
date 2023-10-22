@@ -21,7 +21,7 @@ def input_error(func):
         except KeyError:
             return "Contact does not exist. Please try again!"
         except IndexError:
-            return "Invalid command format."
+            return "Invalid command format! Command must be followed by name and phone"
     return wrapper
 
 @input_error
@@ -46,10 +46,9 @@ def show_phone(args, contacts) :
 
 @input_error    
 def show_all(contacts) :
-    all = ""
-    for k, v in contacts.items() :
-        all += f"{k} {v}\n"
-    return all.rstrip()
+    all = "\n".join([f"{name} {phone}" for name, phone in contacts.items()])
+
+    return all
 
 def main():
     contacts = {}
